@@ -1,0 +1,18 @@
+# Policy for the demo. Patterns are "<server>.<tool>" globs.
+
+# Tools whose results come from outside your control. Reading from them
+# marks ("taints") the session, even when no detector complains.
+untrusted_sources:
+  - "notes*.*"
+
+# Tools that send data out, write or delete. After the session is tainted,
+# calling one of these is held until a human approves that exact call.
+high_risk_tools:
+  - "mail.send_email"
+  - "*.delete_*"
+
+# block: replace a flagged tool result with an error.  flag: pass it on, only taint + log.
+on_injected_result: block
+
+# What to do if the detector itself fails (e.g. LLM API down).  block | allow
+on_detector_error: block

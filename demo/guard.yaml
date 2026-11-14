@@ -1,0 +1,18 @@
+# Proxy config for the demo. Relative paths are resolved against this file's directory.
+detector: rules            # none | rules | llm | combined
+policy_file: policy.yaml
+log_file: run/decisions.jsonl
+session_file: run/session.jsonl
+
+# Each entry is a downstream MCP server the proxy can wrap:
+#   python -m mcp_guard run --config demo/guard.yaml --server notes
+servers:
+  notes:
+    command: python
+    args: [notes_server.py, --variant, obvious]
+  notes_subtle:
+    command: python
+    args: [notes_server.py, --variant, subtle]
+  mail:
+    command: python
+    args: [mail_server.py, --outbox, run/outbox.jsonl]
