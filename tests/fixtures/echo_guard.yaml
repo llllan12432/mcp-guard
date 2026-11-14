@@ -1,0 +1,8 @@
+detector: rules
+policy_file: echo_policy.yaml
+log_file: run/decisions.jsonl
+session_file: run/session.jsonl
+servers:
+  echo:
+    command: python
+    args: [echo_server.py]

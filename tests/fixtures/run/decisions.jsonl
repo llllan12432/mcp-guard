@@ -1,0 +1,14 @@
+{"ts": "2026-11-14T22:49:59.728+00:00", "server": "echo", "event": "tool_description", "tool": "echo", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.04}
+{"ts": "2026-11-14T22:49:59.729+00:00", "server": "echo", "event": "tool_description", "tool": "add", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.03}
+{"ts": "2026-11-14T22:49:59.730+00:00", "server": "echo", "event": "tool_call", "tool": "add", "detector": "policy", "verdict": "allow", "reason": "no policy rule applies"}
+{"ts": "2026-11-14T22:49:59.731+00:00", "server": "echo", "event": "tool_result", "tool": "add", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.01}
+{"ts": "2026-11-14T22:50:02.731+00:00", "server": "echo", "event": "tool_description", "tool": "echo", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.06}
+{"ts": "2026-11-14T22:50:02.731+00:00", "server": "echo", "event": "tool_description", "tool": "add", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.03}
+{"ts": "2026-11-14T22:50:02.732+00:00", "server": "echo", "event": "tool_call", "tool": "add", "detector": "policy", "verdict": "allow", "reason": "no policy rule applies"}
+{"ts": "2026-11-14T22:50:02.733+00:00", "server": "echo", "event": "tool_result", "tool": "add", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.01}
+{"ts": "2026-11-14T22:50:11.588+00:00", "server": "echo", "event": "tool_description", "tool": "echo", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.05}
+{"ts": "2026-11-14T22:50:11.588+00:00", "server": "echo", "event": "tool_description", "tool": "add", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.03}
+{"ts": "2026-11-14T22:50:25.927+00:00", "server": "echo", "event": "tool_description", "tool": "echo", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.05}
+{"ts": "2026-11-14T22:50:25.927+00:00", "server": "echo", "event": "tool_description", "tool": "add", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.03}
+{"ts": "2026-11-14T22:50:47.952+00:00", "server": "echo", "event": "tool_description", "tool": "echo", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.05}
+{"ts": "2026-11-14T22:50:47.953+00:00", "server": "echo", "event": "tool_description", "tool": "add", "detector": "rules", "verdict": "allow", "reason": "no rule matched", "latency_ms": 0.03}
