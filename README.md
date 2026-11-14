@@ -134,9 +134,10 @@ Only the stdio transport is supported. Detector choice (`none`, `rules`, `llm`,
 python -m pytest
 ```
 
-54 tests. The end-to-end tests start real subprocesses (SDK client, proxy, server) and cover
+55 tests. The end-to-end tests start real subprocesses (SDK client, proxy, server) and cover
 both the current stateless protocol (2026-07-28) and the older initialize handshake. The LLM
-detector is tested with a mocked API client; no test uses the network.
+detector is tested with a mocked client, and once through the real Anthropic SDK against a
+local stub server (skipped if `anthropic` is not installed). No test uses the network.
 
 ## Evaluation
 
@@ -189,7 +190,7 @@ The threat model and every design decision, with the alternatives that were reje
 
 ## What was built during the hackathon
 
-Everything in this repository was written during the hackathon; the git history starts on
+Everything in this repository was written for this hackathon; the git history starts on
 2026-11-14.
 
 | Path | Content |

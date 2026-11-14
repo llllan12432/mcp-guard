@@ -37,7 +37,7 @@
   - 完成标准：`viewer/index.html` 可打开 JSONL 日志；README 含安装、运行、演示、评测结果、局限性、比赛期间编写的内容
   - 验证：浏览器里实际打开页面加载演示日志；README 中的命令逐条执行
 
-- [ ] **7. 干净环境走查**
+- [x] **7. 干净环境走查**
   - 完成标准：全新目录 `git clone` + 新 venv，严格按 README 操作全部成功
   - 验证：实际执行，发现的问题修掉并回归
 
@@ -48,3 +48,4 @@
 - 步骤 4：`python demo/run_demo.py` 实际运行，四个场景结果符合预期（退出码 0）；`tests/test_demo.py` 断言同样的结果。
 - 步骤 5：`python eval/run_eval.py` 实际运行生成 `eval/results.md`。环境里没有 `ANTHROPIC_API_KEY`，所以 `llm` 和 `combined` 标为跳过、没有数字。种子样本的结果没有做任何调整：规则检测器漏 5 条、误报 3 条，都列在报告里。
 - 步骤 6：`viewer/index.html` 在浏览器里实际打开并加载演示日志（27 条决定、3 条 block），筛选功能正常，控制台无报错。
+- 步骤 7：在全新目录 `git clone` + 新建 venv，严格按 README 执行：`pip install -e ".[dev]"`、`python demo/run_demo.py`（退出码 0）、`python -m pytest`（全部通过，未装 anthropic 时 SDK 测试自动跳过）、`python eval/run_eval.py`、`pending/approve/reset` 命令、再装 `.[llm]` 后重跑测试，全部成功。走查后补了一个测试（真实 Anthropic SDK 对本地假接口），最终 55 个测试通过。
