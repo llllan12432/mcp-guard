@@ -29,7 +29,7 @@
   - 完成标准：`python demo/run_demo.py` 一条命令：不经代理攻击成功，经代理被拦下
   - 验证：`tests/test_demo.py` 运行脚本并断言每个场景的结果（假发件箱里有没有攻击者地址）
 
-- [ ] **5. 评测框架**
+- [x] **5. 评测框架**
   - 完成标准：`eval/samples.jsonl` 每类 5 条种子；`python eval/run_eval.py` 输出每种检测器的拦截率、误报率、平均延迟的 markdown 表，并单独列出漏报和误报；没有 API key 时跳过 LLM 并注明
   - 验证：`tests/test_eval.py` + 实际运行生成 `eval/results.md`
 
@@ -46,3 +46,4 @@
 - 步骤 1–3 的代码是连着写的（代理要调用 Guard，Guard 要调用检测器），一起验证：`pytest` 48 个测试全部通过（其中 8 个是真实子进程的端到端测试）。
 - 实现中发现并修复：代理收到 EOF 后不退出（要等宿主 2 秒后强杀）——原因是没有关闭写流；下游 server 先退出时代理挂起——原因是读 stdin 的线程无法取消，改为记录后直接退出。
 - 步骤 4：`python demo/run_demo.py` 实际运行，四个场景结果符合预期（退出码 0）；`tests/test_demo.py` 断言同样的结果。
+- 步骤 5：`python eval/run_eval.py` 实际运行生成 `eval/results.md`。环境里没有 `ANTHROPIC_API_KEY`，所以 `llm` 和 `combined` 标为跳过、没有数字。种子样本的结果没有做任何调整：规则检测器漏 5 条、误报 3 条，都列在报告里。

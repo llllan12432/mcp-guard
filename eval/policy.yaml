@@ -1,0 +1,11 @@
+# Policy used by the evaluation. Same format as demo/policy.yaml.
+untrusted_sources:
+  - "notes.*"
+  - "web.*"
+  - "tickets.*"
+high_risk_tools:
+  - "mail.send_email"
+  - "http.post"
+  - "*.delete_*"
+on_injected_result: block
+on_detector_error: block
