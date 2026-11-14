@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCP Guard decision log</title>
+<style>
+  :root { color-scheme: light dark; --line: #8884; --muted: #888; }
+  body { font: 14px/1.45 system-ui, sans-serif; margin: 0; padding: 20px 24px; }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  p.help { color: var(--muted); margin: 0 0 14px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 12px; }
+  .bar label { display: inline-flex; gap: 5px; align-items: center; }
+  .counts { margin-left: auto; color: var(--muted); }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 600; white-space: nowrap; }
+  td.mono { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; white-space: nowrap; }
+  td.reason { min-width: 280px; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+  .allow { background: #2e7d3226; color: #2e7d32; }
+  .flag  { background: #b2690026; color: #b26900; }
+  .block { background: #c6282826; color: #c62828; }
+  @media (prefers-color-scheme: dark) {
+    .allow { color: #81c784; } .flag { color: #ffb74d; } .block { color: #ef9a9a; }
+  }
+  #empty { color: var(--muted); padding: 30px 0; }
+</style>
+</head>
+<body>
+<h1>MCP Guard decision log</h1>
+<p class="help">Choose a <code>decisions.jsonl</code> file (for the demo: <code>demo/run/decisions.jsonl</code>). The file is read in your browser only; nothing is uploaded.</p>
+
+<div class="bar">
+  <input type="file" id="file" accept=".jsonl,.json,.txt">
+  <label><input type="checkbox" class="verdict" value="block" checked> block</label>
+  <label><input type="checkbox" class="verdict" value="flag" checked> flag</label>
+  <label><input type="checkbox" class="verdict" value="allow" checked> allow</label>
+  <span class="counts" id="counts"></span>
+</div>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Time (UTC)</th><th>Verdict</th><th>Event</th><th>Tool</th><th>Detector</th><th>Reason</th></tr></thead>
+  <tbody id="rows"></tbody>
+</table>
+</div>
+<div id="empty">No log loaded yet.</div>
+
+<script>
+// Log content is attacker-influenced (reasons can quote injected text), so every
+// value is inserted with textContent, never as HTML.
+let records = [];
+
+function parse(text) {
+  const out = [];
+  for (const line of text.split("\n")) {
+    if (!line.trim()) continue;
+    try { out.push(JSON.parse(line)); } catch (e) { /* skip a broken line */ }
+  }
+  return out;
+}
+
+function cell(row, text, className) {
+  const td = document.createElement("td");
+  td.textContent = text;
+  if (className) td.className = className;
+  row.appendChild(td);
+  return td;
+}
+
+function render() {
+  const wanted = new Set([...document.querySelectorAll(".verdict:checked")].map(box => box.value));
+  const body = document.getElementById("rows");
+  body.replaceChildren();
+  const totals = { allow: 0, flag: 0, block: 0 };
+  for (const record of records) {
+    totals[record.verdict] = (totals[record.verdict] || 0) + 1;
+    if (!wanted.has(record.verdict)) continue;
+    const row = document.createElement("tr");
+    cell(row, String(record.ts || "").replace("T", " ").replace("+00:00", ""), "mono");
+    const verdict = cell(row, "");
+    const tag = document.createElement("span");
+    tag.className = "tag " + (["allow", "flag", "block"].includes(record.verdict) ? record.verdict : "");
+    tag.textContent = record.verdict;
+    verdict.appendChild(tag);
+    cell(row, record.event, "mono");
+    cell(row, record.server + "." + record.tool, "mono");
+    cell(row, record.detector, "mono");
+    let reason = record.reason || "";
+    if (record.approval_id) reason += "  [approval id " + record.approval_id + "]";
+    cell(row, reason, "reason");
+    body.appendChild(row);
+  }
+  document.getElementById("empty").hidden = records.length > 0;
+  document.getElementById("counts").textContent = records.length
+    ? `${records.length} decisions: ${totals.block} block, ${totals.flag} flag, ${totals.allow} allow` : "";
+}
+
+document.getElementById("file").addEventListener("change", async event => {
+  const file = event.target.files[0];
+  if (file) { records = parse(await file.text()); render(); }
+});
+document.querySelectorAll(".verdict").forEach(box => box.addEventListener("change", render));
+
+// Optional: when the page is served over HTTP, ?log=/demo/run/decisions.jsonl loads a file directly.
+const preset = new URLSearchParams(location.search).get("log");
+if (preset && location.protocol.startsWith("http")) {
+  fetch(preset).then(response => response.text()).then(text => { records = parse(text); render(); });
+}
+</script>
+</body>
+</html>

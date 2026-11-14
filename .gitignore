@@ -6,3 +6,4 @@ __pycache__/
 demo/run/
 logs/
 .env
+.claude/
