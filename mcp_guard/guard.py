@@ -126,9 +126,11 @@ class Guard:
             self.session.add_pending(call_id, qualified, arguments)
             reason = f"high-risk tool called after the session read untrusted content ({taint['source']}: {taint['reason']})"
             self.log.write(server=self.server, event="tool_call", tool=tool, detector="policy", verdict="block", reason=reason, approval_id=call_id, arguments=arguments)
+            # The approval id is deliberately NOT in this message: the agent has no need
+            # for it. The human finds it with `mcp-guard pending` or in the decision log.
             return (
                 f"Call to high-risk tool '{tool}' is on hold: this session has read untrusted content, "
-                f"so a human must approve it first (approval id {call_id}). Tell the user; do not retry until they approve."
+                "so a human must approve it first. Tell the user; do not retry until they have approved it."
             )
 
         self.log.write(server=self.server, event="tool_call", tool=tool, detector="policy", verdict="allow", reason="no policy rule applies")

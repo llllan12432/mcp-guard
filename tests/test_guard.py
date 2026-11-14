@@ -109,7 +109,7 @@ async def test_high_risk_call_held_only_after_taint_and_approval_is_single_use(m
     await notes.check_result("read_note", text_result("just a note"))
     message = await mail.check_call("send_email", arguments)
     call_id = approval_id("mail.send_email", arguments)
-    assert message is not None and call_id in message
+    assert message is not None and call_id not in message  # the agent is not told the id
     assert list(mail.session.pending()) == [call_id]
 
     assert await notes.check_call("read_note", {"note_id": "n1"}) is None  # low-risk tools still work

@@ -49,3 +49,4 @@
 - 步骤 5：`python eval/run_eval.py` 实际运行生成 `eval/results.md`。环境里没有 `ANTHROPIC_API_KEY`，所以 `llm` 和 `combined` 标为跳过、没有数字。种子样本的结果没有做任何调整：规则检测器漏 5 条、误报 3 条，都列在报告里。
 - 步骤 6：`viewer/index.html` 在浏览器里实际打开并加载演示日志（27 条决定、3 条 block），筛选功能正常，控制台无报错。
 - 步骤 7：在全新目录 `git clone` + 新建 venv，严格按 README 执行：`pip install -e ".[dev]"`、`python demo/run_demo.py`（退出码 0）、`python -m pytest`（全部通过，未装 anthropic 时 SDK 测试自动跳过）、`python eval/run_eval.py`、`pending/approve/reset` 命令、再装 `.[llm]` 后重跑测试，全部成功。走查后补了一个测试（真实 Anthropic SDK 对本地假接口），最终 55 个测试通过。
+- 收尾：README 增加 Credits / AI use 和两条局限；新增 `submission/`（Devpost 文案、截图、GIF、讲解稿）。针对「agent 自己批准自己」加了两个小缓解（`approve` 仅限交互终端并需输入 yes；错误信息不再带审批 id），端到端测试用伪终端覆盖了拒绝、输入 no、输入 yes 三种情况。这只是部分缓解，局限照实写在 README 里。
