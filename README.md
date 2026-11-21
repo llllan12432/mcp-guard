@@ -211,7 +211,7 @@ The threat model and every design decision, with the alternatives that were reje
 ## What was built during the hackathon
 
 All code in this repository was written inside the SafeSpace Hacks development window
-(2026-10-17 to 2026-11-22). Nothing was reused from earlier projects.
+(which opened on 2026-10-17). Nothing was reused from earlier projects.
 
 | Path | Content |
 |---|---|

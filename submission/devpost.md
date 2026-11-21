@@ -156,7 +156,7 @@ Solo entry: one participant.
   requirements and constraints, set the acceptance criteria, and ran and accepted the
   tests, demo and evaluation.
 - **Built during the hackathon.** All code was written inside the development window
-  (17 October to 22 November 2026). Nothing was reused from earlier work.
+  (which opened on 17 October 2026). Nothing was reused from earlier work.
 - **Existing components**, used unmodified: the official MCP Python SDK (`mcp`), PyYAML,
   pytest, and optionally the Anthropic Python SDK for the LLM detector.
 - The attack patterns (tool poisoning, indirect prompt injection) are publicly documented
