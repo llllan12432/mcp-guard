@@ -56,7 +56,7 @@ the follow-up call. Evaluation sample `ec-05` is exactly this case, and it gets 
 Requires Python 3.11 or newer.
 
 ```bash
-git clone <repo-url> mcp-guard
+git clone https://github.com/llllan12432/mcp-guard.git mcp-guard
 cd mcp-guard
 python3 -m venv .venv
 source .venv/bin/activate
